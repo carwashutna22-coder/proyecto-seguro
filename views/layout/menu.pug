@@ -1,0 +1,36 @@
+html
+  body
+    nav.navbar.navbar-expand-lg.bg-body-tertiary
+      .container.position-relative
+
+        // 🔹 BLOQUE CENTRADO (LOGO + MENÚ)
+        .d-flex.align-items-center.justify-content-center.w-100
+
+          // LOGO
+          a.navbar-brand.me-2(href="/")
+            img(src="/img/logo.png", alt="Logo", width="60", height="60")
+
+          // MENÚ
+          ul.navbar-nav.flex-row.gap-3
+
+            li.nav-item
+              a.nav-link(href="/") Inicio
+
+            li.nav-item
+              a.nav-link(href="/servicios") Servicios y Precios
+
+            li.nav-item
+              a.nav-link(href="/ubicacion") Ubicación
+
+            li.nav-item
+              a.nav-link(href="/contacto") Contacto
+
+
+        // 🔹 LOGIN FIJO A LA DERECHA
+        .position-absolute.end-0.top-50.translate-middle-y.me-3
+          a(href="/login")
+            img(
+              src="/img/login.png",
+              alt="Login",
+              style="width:40px; cursor:pointer;"
+            )

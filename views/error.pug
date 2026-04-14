@@ -1,0 +1,10 @@
+include layout/header
+
+.container.py-5
+  .row.justify-content-center
+    .col-md-8.text-center
+      .alert.alert-danger.shadow
+        h4.alert-heading ⚠️ Error de validación
+        p= mensaje
+        hr
+        a.btn.btn-outline-danger(href='javascript:history.back()') ← Regresar

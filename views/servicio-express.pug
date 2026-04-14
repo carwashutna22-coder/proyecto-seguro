@@ -1,0 +1,141 @@
+include layout/header.pug
+include layout/menu.pug
+
+.container.mt-5
+
+  h1.text-center Exterior Express
+  p.text-center.text-muted Lavado rápido y eficiente en menos de 10 minutos
+
+  // IMAGEN
+  .text-center.mt-4
+    img.img-servicio(src="/img/EES.jpg")
+
+  // DESCRIPCIÓN
+  .mt-4
+    p.text-center.mt-3
+      | Nuestro servicio Exterior Express está diseñado para quienes necesitan rapidez sin perder calidad.
+      | En pocos minutos tu vehículo quedará limpio, brillante y listo para continuar tu día.
+    p.text-center.mt-3
+      | Utilizamos tecnología moderna, espuma activa y productos especializados que protegen la pintura
+      | mientras eliminan suciedad, polvo y residuos acumulados.
+
+  p.text-success.text-center.mt-3
+    strong ¡Servicio sin cita previa!
+
+  // ===== SERVICIOS =====
+
+  // BÁSICO
+  .card.card-servicio.mt-5
+    h2.titulo-servicio.text-center Lavado Express Básico
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Spray de remojo previo
+        li Espuma activa
+        li Enjuague a presión
+        li Secado rápido
+
+      .precio-box
+        span.precio $60
+
+  // WHEEL
+  .card.card-servicio.mt-4
+    h2.titulo-servicio.text-center Wheel Express
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Remojo previo
+        li Espuma activa
+        li Limpieza de llantas
+        li Cera protectora
+        li Secado completo
+
+      .precio-box
+        span.precio $100
+
+  // TSUNAMI (DESTACADO)
+  .card.card-servicio.destacado.mt-4
+    .badge-popular Más solicitado
+
+    h2.titulo-servicio.text-center Tsunami Express
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Lavado profundo
+        li Cera selladora
+        li Protección de pintura
+        li Limpieza de rines
+        li Secado profesional
+
+      .precio-box
+        span.precio $120
+
+  // RÁPIDO
+  .card.card-servicio.mt-4
+    h2.titulo-servicio.text-center Lavado Rápido
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Limpieza ligera
+        li Enjuague básico
+        li Secado rápido
+
+      .precio-box
+        span.precio $40
+
+  // NOTA
+  p.text-muted.mt-3
+    | *Se aplican cargos adicionales a vehículos grandes o muy sucios.*
+
+  // BOTÓN
+  .text-center.mt-5
+    a.btn.btn-primary(href="/servicios") Volver a servicios
+
+
+// ===== FOOTER =====
+footer.mt-5(style="background:#111; color:white; padding:30px;")
+  .container
+    .row
+
+      .col-md-3
+        h5 Sobre nosotros
+        p Desde su apertura en 1998, UTNACAR WASH ha brindado servicio a clientes que buscan un lavado de autos de alta calidad a un precio accesible, con atención profesional y resultados confiables.
+
+      .col-md-3
+        h5 Nuestros servicios
+        ul
+          li Lavado exterior exprés
+          li Limpieza interior
+          li Lavado completo
+          li Detallado exprés
+          li Encerado protector
+          li Mantenimiento preventivo
+
+      // ENLACES ÚTILES ✅ (CORREGIDO)
+      .col-md-3
+        h5 Enlaces útiles
+        ul.list-unstyled
+          li
+            a.text-white.text-decoration-none(href="/") Inicio
+          li
+            a.text-white.text-decoration-none(href="/servicios") Servicios y precios
+          li
+            a.text-white.text-decoration-none(href="/ubicacion") Ubicación
+          li
+            a.text-white.text-decoration-none(href="/contacto") Contáctanos
+
+      .col-md-3
+        h5 Información de contacto
+        p Llámanos ahora:
+        p 458 109 6668
+        p Guadalupe, Zacatecas
+        p Lunes a sábado: 8:00 a.m. – 6:00 p.m.
+        p Domingo: 9:00 a.m. – 3:00 p.m.
+
+  .text-center.mt-3
+    p ©2026 UTNACAR WASH. Todos los derechos reservados.
+    a(href="#") Mapa del sitio
+    |  | 
+    a(href="#") Términos y condiciones
+    |  | 
+    a(href="#") Política de privacidad

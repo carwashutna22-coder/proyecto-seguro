@@ -1,0 +1,123 @@
+include layout/header.pug
+include layout/menu.pug
+
+.container.mt-5
+
+  h1.text-center Detallado de Automóviles
+  p.text-center.text-muted Limpieza profunda interior y exterior
+
+  .text-center.mt-4
+    img.img-servicio(src="/img/DA.jpg")
+
+  .mt-4
+    p.text-center.mt-3
+      | Nuestro servicio de detallado está diseñado para devolverle a tu vehículo
+      | su apariencia original, cuidando cada detalle tanto por dentro como por fuera.
+    p.text-center.mt-3
+      | Utilizamos productos profesionales que protegen las superficies y mejoran
+      | la estética del automóvil.
+
+  p.text-success.text-center.mt-3
+    strong ¡Resultados visibles desde el primer servicio!
+
+  // ===== SERVICIOS =====
+
+  // INTERIOR
+  .card.card-servicio.mt-5
+    h2.titulo-servicio.text-center Detallado Interior
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Aspirado completo
+        li Limpieza de asientos
+        li Limpieza de tablero y consola
+        li Limpieza de puertas
+        li Aromatizante
+
+      .precio-box
+        span.precio $140
+
+  // EXTERIOR
+  .card.card-servicio.mt-4
+    h2.titulo-servicio.text-center Detallado Exterior
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Lavado profundo
+        li Pulido ligero
+        li Cera protectora
+        li Limpieza de rines
+        li Secado profesional
+
+      .precio-box
+        span.precio $160
+
+  // COMPLETO (DESTACADO)
+  .card.card-servicio.destacado.mt-4
+    .badge-popular Más solicitado
+
+    h2.titulo-servicio.text-center Detallado Completo
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Limpieza interior + exterior
+        li Eliminación de manchas
+        li Pulido y encerado
+        li Protección UV
+        li Acabado premium
+
+      .precio-box
+        span.precio $250
+
+  // BOTÓN
+  .text-center.mt-5
+    a.btn.btn-primary(href="/servicios") Volver a servicios
+
+
+// ===== FOOTER =====
+footer.mt-5(style="background:#111; color:white; padding:30px;")
+  .container
+    .row
+
+      .col-md-3
+        h5 Sobre nosotros
+        p Desde su apertura en 1998, UTNACAR WASH ha brindado servicio a clientes que buscan un lavado de autos de alta calidad a un precio accesible, con atención profesional y resultados confiables.
+
+      .col-md-3
+        h5 Nuestros servicios
+        ul
+          li Lavado exterior exprés
+          li Limpieza interior
+          li Lavado completo
+          li Detallado exprés
+          li Encerado protector
+          li Mantenimiento preventivo
+
+ 
+      .col-md-3
+        h5 Enlaces útiles
+        ul.list-unstyled
+          li
+            a.text-white.text-decoration-none(href="/") Inicio
+          li
+            a.text-white.text-decoration-none(href="/servicios") Servicios y precios
+          li
+            a.text-white.text-decoration-none(href="/ubicacion") Ubicación
+          li
+            a.text-white.text-decoration-none(href="/contacto") Contáctanos
+
+      .col-md-3
+        h5 Información de contacto
+        p Llámanos ahora:
+        p 458 109 6668
+        p Guadalupe, Zacatecas
+        p Lunes a sábado: 8:00 a.m. – 6:00 p.m.
+        p Domingo: 9:00 a.m. – 3:00 p.m.
+
+  .text-center.mt-3
+    p ©2026 UTNACAR WASH. Todos los derechos reservados.
+    a(href="#") Mapa del sitio
+    |  | 
+    a(href="#") Términos y condiciones
+    |  | 
+    a(href="#") Política de privacidad

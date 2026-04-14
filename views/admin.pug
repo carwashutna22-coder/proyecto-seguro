@@ -1,0 +1,58 @@
+include layout/header
+
+body.login-body
+
+  // Fondo
+  .overlay
+  .wave
+  .wave 
+
+  // CONTENEDOR PRINCIPAL
+  .login-box.tabla-wrapper
+
+    // LOGO
+    .logo.text-center
+      img(src="/img/logo.png", alt="Logo Autolavado")
+
+    // TÍTULOS
+    h2.titulo UTNACAR WASH
+    h3.subtitulo Panel de Administración
+
+    // SECCIÓN EMPLEADOS
+    details.empleados-box
+      summary.btn-toggle
+        span Ver empleados
+
+      .tabla-container
+        table.tabla-empleados
+          thead
+            tr
+              th Nombre
+              th Correo
+              th Puesto
+              th Acciones
+
+          tbody
+            if usuarios.length > 0
+              each u in usuarios
+                tr
+                  td #{u.nombre}
+                  td.correo #{u.correo}
+                  td #{u.nombre_puesto}
+                  td.acciones
+                    a.btn-editar(
+                      href=`/editar/${encodeURIComponent(u.correo)}`
+                      title="Editar"
+                    ) ✏️
+                    form(method="POST" action=`/eliminar/${u.correo}` style="display:inline" onsubmit="return confirm('¿Eliminar usuario?')")
+                      button.btn-eliminar(type="submit" title="Eliminar") 🗑️
+            else
+              tr
+                td(colspan="4") No hay empleados registrados
+
+    // BOTONES
+    .botones
+      a.btn(href="/registrodeservicio") Registrar servicio
+      a.btn(href="/servicios-lista") Ver servicios registrados
+      a.btn.btn-primary(href="/registro") Registrar nuevo usuario
+      a.btn(href="/login") Cerrar sesión

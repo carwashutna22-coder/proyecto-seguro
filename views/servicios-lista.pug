@@ -1,0 +1,46 @@
+include layout/header
+
+.login-body
+  .tabla-wrapper
+
+    h2.titulo.text-center Servicios Registrados
+    p.subtitulo.text-center Panel de administración de servicios
+
+    .empleados-box
+      details(open)
+        summary.btn-toggle
+          | Ver servicios registrados
+
+        .tabla-container
+          table.tabla-empleados
+            thead
+              tr
+                th Cliente
+                th Vehículo
+                th Servicio
+                th Fecha
+                th Estado
+                th Acciones
+
+            tbody
+              each servicio in servicios
+                tr
+                  td= servicio.nombreCliente
+                  td #{servicio.marcaVehiculo} #{servicio.modeloVehiculo}
+                  td= servicio.servicio
+                  td= servicio.fechaServicio
+                  td= servicio.estadoVehiculo
+
+                  td.acciones
+                    a.btn-editar(href=`/consultar/${servicio._id}` title="Consultar") 👁
+                    a.btn-editar(href=`/ticket/${servicio._id}` title="Ticket") 🎫
+                    a.btn-editar(href=`/editar-servicio/${servicio._id}` title="Editar") ✏
+                    a.btn-eliminar(href=`/eliminar-servicio/${servicio._id}` onclick="return confirm('¿Seguro que deseas eliminar este registro?')" title="Eliminar") 🗑
+
+              if servicios.length === 0
+                tr
+                  td(colspan="6") No hay servicios registrados.
+
+    .botones
+      a.btn(href="/registrodeservicio") Nuevo Registro
+      a.btn(href="/admin") Panel de Administración

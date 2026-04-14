@@ -1,0 +1,82 @@
+.tabla-wrapper {
+  max-width: 1000px;
+  margin: 30px auto;
+}
+
+.tabla-container {
+  overflow-x: auto;
+}
+
+.tabla-empleados {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ENCABEZADO */
+.tabla-empleados thead {
+  background: #0d6efd;
+  color: white;
+}
+
+.tabla-empleados th {
+  padding: 12px;
+}
+
+/* FILAS */
+.tabla-empleados td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+/* HOVER */
+.tabla-empleados tbody tr:hover {
+  background: #f2f2f2;
+}
+
+/* COLUMNAS */
+.tabla-empleados th:nth-child(1),
+.tabla-empleados td:nth-child(1) { width: 25%; }
+
+.tabla-empleados th:nth-child(2),
+.tabla-empleados td:nth-child(2) { width: 35%; }
+
+.tabla-empleados th:nth-child(3),
+.tabla-empleados td:nth-child(3) { width: 20%; }
+
+.tabla-empleados th:nth-child(4),
+.tabla-empleados td:nth-child(4) { width: 20%; }
+
+/* CORREO */
+.correo {
+  word-break: break-all;
+  font-size: 13px;
+}
+
+/* ACCIONES */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* BOTONES */
+.btn-editar {
+  background: #ffc107;
+  padding: 5px 8px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+.btn-eliminar {
+  background: #dc3545;
+  padding: 5px 8px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+}

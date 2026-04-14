@@ -1,0 +1,228 @@
+include layout/header.pug 
+include layout/menu.pug
+
+// PORTADA
+section(style="background: url('/img/fondoInicio.png') no-repeat center center/cover; height: 100vh;")
+  .container.h-100.d-flex.align-items-center
+    .text-white
+      h1.display-4.fw-bold ¡DEJA TU AUTO COMO NUEVO!
+      p.mt-3 Servicio profesional de lavado automotriz
+      a.btn.btn-primary(href="servicios") Ver Servicios
+
+// SERVICIOS
+.container.mt-5
+  h2.text-center ¿Qué ofrecemos?
+
+  .row.mt-4
+
+    .col-md-4
+      .card.p-3
+        img(src="/img/basico.png")
+        h3 Exterior Express
+        p Lavado rápido y eficiente
+        a.btn.btn-primary(href="/servicio-express") Ver más
+
+    .col-md-4
+      .card.p-3
+        img(src="/img/premium.png")
+        h3 Detallado de Autos
+        p Limpieza profunda interior y exterior
+        a.btn.btn-primary(href="/servicio-detallado") Ver más
+
+    .col-md-4
+      .card.p-3
+        img(src="/img/encerado.png")
+        h3 Servicio Completo
+        p Acabado profesional premium
+        a.btn.btn-primary(href="/servicio-completo") Ver más
+
+// EXPERIENCIA
+.container.mt-5
+  .row.align-items-center
+    .col-md-6
+      img(src="/img/persona.png", style="width:100%;")
+    .col-md-6
+      h2 25 años de experiencia
+      h2 en la industria del lavado y detallado de automóviles
+
+      p Carwash hizo su debut en Estados Unidos en 1998, trayendo consigo una trayectoria de 40 años en el negocio de las tiendas de conveniencia y los lavaderos de autos en siete estados.
+      p Construimos nuestra marca ofreciendo a los clientes una sensación de lujo en un lugar donde no lo esperarían: un lavadero de autos.
+
+      button.btn.btn-primary(onclick="toggleInfo()") Saber más
+
+      #infoExtra(style="display:none;")
+        h3 Nuestra trayectoria y compromiso con la calidad
+        p Desde sus inicios, Carwash ha trabajado con el objetivo de transformar el concepto tradicional del lavado automotriz en una experiencia más completa, eficiente y confiable.
+        p Hemos incorporado procesos innovadores, equipos modernos y productos especializados para cuidar cada detalle del vehículo.
+        p Nuestro crecimiento ha sido posible gracias a la confianza de nuestros clientes.
+        p Nos enfocamos en la capacitación constante del personal para brindar un servicio profesional.
+        p Actualmente seguimos comprometidos con calidad, confianza y resultados visibles desde el primer servicio.
+
+// GALERÍA TEXTO
+.container.mt-5.text-center
+  h2 ¡Mantén tu coche limpio todos los días del año!
+  p Vea algunas imágenes de nuestra galería.
+
+// GALERÍA
+.container
+  .row
+    each img in ['G1.jpg','G2.jpg','G3.jpg','G4.png','G5.jpg','G6.jpg','G7.jpg','G8.jpg']
+      .col-md-3.mb-3
+        img(src=`/img/${img}`, style="width:100%; height:150px; object-fit:cover;")
+
+// POR QUÉ ELEGIRNOS
+.container.mt-5
+  h2.text-center ¿Por qué elegirnos?
+  p.text-center He aquí por qué nuestro servicio destaca.
+
+  .row.mt-4
+
+    .col-md-4.mb-3
+      .d-flex.align-items-start
+        img(src="/img/SDC.png", style="width:80px; margin-right:20px;")
+        div
+          h5 Servicios de confianza
+          p.text-muted Servicio preciso al mejor precio.
+
+    .col-md-4.mb-3
+      .d-flex.align-items-start
+        img(src="/img/PO.png", style="width:80px; margin-right:20px;")
+        div
+          h5 Productos orgánicos
+          p.text-muted Cuidamos tu auto y el medio ambiente.
+
+    .col-md-4.mb-3
+      .d-flex.align-items-start
+        img(src="/img/TT.png", style="width:80px; margin-right:20px;")
+        div
+          h5 Trabajadores talentosos
+          p.text-muted Personal capacitado.
+
+    .col-md-4.mb-3
+      .d-flex.align-items-start
+        img(src="/img/JDME.png", style="width:80px; margin-right:20px;")
+        div
+          h5 Jabón ecológico
+          p.text-muted Limpieza segura.
+
+    .col-md-4.mb-3
+      .d-flex.align-items-start
+        img(src="/img/RO.png", style="width:80px; margin-right:20px;")
+        div
+          h5 Reserva online
+          p.text-muted Atención eficiente.
+
+    .col-md-4.mb-3
+      .d-flex.align-items-start
+        img(src="/img/GR.png", style="width:80px; margin-right:20px;")
+        div
+          h5 Gran resultado
+          p.text-muted Resultados visibles desde el primer servicio.
+
+// TESTIMONIOS
+.container.mt-5
+  h1.text-center.mb-5 Comentarios de los clientes
+
+  .row
+
+    .col-md-4.mb-4
+      .card.p-4.text-center.shadow-sm
+        p.text-muted
+          | Me encanta la eficiencia del lavadero de autos. 
+          | Un saludo amable, un lavado excelente y listo, ¡limpio!
+          | ¡El mejor lavadero de autos de todos!
+        
+        h5.mt-3.mb-0 Bill Dedman 
+          span.text-muted - Cliente
+        
+        .mt-2
+          span.text-warning ★★★★★
+
+    // TESTIMONIO 2
+    .col-md-4.mb-4
+      .card.p-4.text-center.shadow-sm
+        p.text-muted
+          | Un lugar estupendo para un lavado de autos.
+          | Además, hay aspiradoras de autoservicio gratuitas,
+          | ¡genial!
+        
+        h5.mt-3.mb-0 Bill Dedman 
+          span.text-muted - Cliente
+        
+        .mt-2
+          span.text-warning ★★★★★
+
+    // TESTIMONIO 3
+    .col-md-4.mb-4
+      .card.p-4.text-center.shadow-sm
+        p.text-muted
+          | La calidad del lavado fue excelente.
+          | Muy buen servicio y atención.
+        
+        h5.mt-3.mb-0 Gregory Benford 
+          span.text-muted - Cliente
+        
+        .mt-2
+          span.text-warning ★★★★★
+
+// FOOTER
+footer.mt-5(style="background:#111; color:white; padding:30px;")
+  .container
+    .row
+
+      // SOBRE NOSOTROS
+      .col-md-3
+        h5 Sobre nosotros
+        p Desde su apertura en 1998, UTNACAR WASH ha brindado servicio a clientes que buscan un lavado de autos de alta calidad a un precio accesible.
+
+      // NUESTROS SERVICIOS
+      .col-md-3
+        h5 Nuestros servicios
+        ul
+          li Lavado exterior exprés
+          li Limpieza interior
+          li Lavado completo
+          li Detallado exprés
+          li Encerado protector
+          li Mantenimiento preventivo
+
+      // ENLACES ÚTILES ✅ (CORREGIDO)
+      .col-md-3
+        h5 Enlaces útiles
+        ul.list-unstyled
+          li
+            a.text-white.text-decoration-none(href="/") Inicio
+          li
+            a.text-white.text-decoration-none(href="/servicios") Servicios y precios
+          li
+            a.text-white.text-decoration-none(href="/ubicacion") Ubicación
+          li
+            a.text-white.text-decoration-none(href="/contacto") Contáctanos
+
+      // INFORMACIÓN DE CONTACTO
+      .col-md-3
+        h5 Información de contacto
+        p Llámanos ahora:
+        p 458 109 6668
+        p Nos ubicamos cerca de la UTNA en Rincón de Romos, Aguascalientes
+        p Lunes a Sábado: 9:00 AM - 6:00 PM
+        p Domingo: Cerrado
+
+  // PARTE INFERIOR
+  .text-center.mt-3
+    p ©2026 UTNACAR WASH. Todos los derechos reservados.
+    a.text-white(href="#") Mapa del sitio
+    |  | 
+    a.text-white(href="#") Términos y condiciones
+    |  | 
+    a.text-white(href="#") Política de privacidad
+
+script.
+  function toggleInfo() {
+    var info = document.getElementById("infoExtra");
+    if (info.style.display === "none") {
+      info.style.display = "block";
+    } else {
+      info.style.display = "none";
+    }
+  }

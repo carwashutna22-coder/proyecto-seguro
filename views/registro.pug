@@ -1,0 +1,165 @@
+include layout/header
+
+body.login-body
+
+  .overlay
+
+  .wave
+  .wave
+
+  .login-box
+    .logo.text-center
+      img(src="/img/logo.png", alt="Logo Autolavado")
+
+    h2 REGISTRO DE USUARIO
+
+    if error
+      .alert.alert-danger.mb-3= error
+
+    form(action="/registro", method="POST" id="formRegistro")
+
+      .input-box
+        input(
+          type="text"
+          name="nombre"
+          placeholder="Nombre"
+          required
+          maxlength="80"
+          pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,80}"
+          title="Solo letras y espacios, mínimo 2 caracteres"
+          oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '')"
+        )
+
+      .input-box
+        input#correoReg(
+          type="email"
+          name="correo"
+          placeholder="Correo electrónico"
+          required
+          maxlength="100"
+          autocomplete="email"
+          oninput="validarCorreoReg()"
+        )
+        small#correoRegMsg.text-danger(style="font-size:0.75rem")
+
+      .input-box
+        input#passReg(
+          type="password"
+          name="password"
+          placeholder="Contraseña (mín. 8 car.)"
+          required
+          minlength="8"
+          maxlength="50"
+          autocomplete="new-password"
+          oninput="evaluarPassword()"
+        )
+        .progress.mt-1(style="height:6px")
+          #barraPass.progress-bar(role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100")
+        small#passMsg.text-muted(style="font-size:0.75rem") Mínimo 8 caracteres, mayúscula, número y símbolo.
+
+      .input-box
+        select(name="puesto", required)
+          option(value="") Selecciona un puesto
+          option(value="1") Lavador
+          option(value="2") Encargado
+          option(value="3") Supervisor
+          option(value="4") Administración
+
+      #errorReg.alert.alert-danger.d-none
+
+      button.login-btn(type="submit") Registrarse
+      a.btn(href="/admin") ← Regresar
+
+script.
+  /* ---- Validación de correo ---- */
+  function validarCorreoReg() {
+    var v = document.getElementById('correoReg').value;
+    var msg = document.getElementById('correoRegMsg');
+    if (!v) { msg.textContent = ''; return; }
+    var partes = v.split('@');
+    if (partes.length !== 2) { msg.textContent = 'Falta @'; return; }
+    var local = partes[0], dominio = partes[1];
+    var localOk = local.length >= 1 && local.length <= 64
+      && /^[a-zA-Z0-9]+([._\-][a-zA-Z0-9]+)*$/.test(local);
+    var etiquetas = dominio.split('.');
+    var dominioOk = etiquetas.length >= 2 && etiquetas.every(function(e) {
+      return e.length >= 1 && e.length <= 63
+        && /^[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?$/.test(e);
+    });
+    var tld = etiquetas[etiquetas.length - 1];
+    var tldOk = tld.length >= 2 && /[a-zA-Z]/.test(tld);
+    if (!localOk || !dominioOk || !tldOk) {
+      msg.textContent = 'Correo inválido';
+      msg.className = 'text-danger';
+    } else {
+      msg.textContent = '✓ Correo válido';
+      msg.className = 'text-success';
+    }
+  }
+
+  /* ---- Medidor de seguridad de contraseña ---- */
+  function evaluarPassword() {
+    var pass = document.getElementById('passReg').value;
+    var barra = document.getElementById('barraPass');
+    var msg   = document.getElementById('passMsg');
+    var puntos = 0;
+    var tips = [];
+
+    if (pass.length >= 8)  puntos += 20; else tips.push('mínimo 8 caracteres');
+    if (pass.length >= 12) puntos += 10;
+    if (/[a-z]/.test(pass)) puntos += 15; else tips.push('una minúscula');
+    if (/[A-Z]/.test(pass)) puntos += 20; else tips.push('una MAYÚSCULA');
+    if (/[0-9]/.test(pass)) puntos += 20; else tips.push('un número');
+    if (/[^a-zA-Z0-9]/.test(pass)) puntos += 15; else tips.push('un símbolo (!@#$...)');
+
+    barra.style.width = puntos + '%';
+
+    var nivel, color;
+    if (puntos < 30)       { nivel = 'Muy débil'; color = 'bg-danger'; }
+    else if (puntos < 55)  { nivel = 'Débil';     color = 'bg-warning'; }
+    else if (puntos < 80)  { nivel = 'Aceptable'; color = 'bg-info'; }
+    else                   { nivel = 'Fuerte';    color = 'bg-success'; }
+
+    barra.className = 'progress-bar ' + color;
+    if (tips.length > 0) {
+      msg.textContent = nivel + ' — falta: ' + tips.join(', ');
+      msg.className = 'text-warning';
+    } else {
+      msg.textContent = '✓ Contraseña ' + nivel;
+      msg.className = 'text-success';
+    }
+  }
+
+  /* ---- Prevenir envío si correo o pass inválido ---- */
+  document.getElementById('formRegistro').addEventListener('submit', function(e) {
+    var correo = document.getElementById('correoReg').value;
+    var pass   = document.getElementById('passReg').value;
+    var errorDiv = document.getElementById('errorReg');
+
+    // Validar correo
+    var partes = correo.split('@');
+    var ok = partes.length === 2;
+    if (ok) {
+      var local = partes[0], dominio = partes[1];
+      var localOk = local.length >= 1 && /^[a-zA-Z0-9]+([._\-][a-zA-Z0-9]+)*$/.test(local);
+      var etiquetas = dominio.split('.');
+      var dominioOk = etiquetas.length >= 2 && etiquetas.every(function(e2) {
+        return /^[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?$/.test(e2);
+      });
+      var tld = etiquetas[etiquetas.length - 1];
+      ok = localOk && dominioOk && tld.length >= 2 && /[a-zA-Z]/.test(tld);
+    }
+    if (!ok) {
+      e.preventDefault();
+      errorDiv.textContent = 'El correo no tiene un formato válido.';
+      errorDiv.classList.remove('d-none');
+      return;
+    }
+
+    // Contraseña mínima
+    if (pass.length < 8) {
+      e.preventDefault();
+      errorDiv.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+      errorDiv.classList.remove('d-none');
+    }
+  });

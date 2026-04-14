@@ -1,0 +1,57 @@
+include layout/header
+
+body.login-body
+
+  .overlay
+
+  .wave
+  .wave
+
+  .login-box
+
+    // LOGO
+    .logo.text-center
+      img(src="/img/logo.png", alt="Logo Autolavado")
+
+    h2.text-center UTNACAR WASH
+
+    // ERROR BACKEND
+    if error
+      .alert.alert-danger.mb-3= error
+
+    // FORMULARIO
+    form#formLogin(action="/login", method="POST")
+
+      // CORREO
+      .input-box
+        input#correoLogin(
+          type="email"
+          name="correo"
+          placeholder="Correo"
+          required
+          maxlength="100"
+          autocomplete="email"
+          oninput="this.value = this.value.replace(/[^a-zA-Z0-9.@_\\-]/g, '')"
+        )
+
+      // CONTRASEÑA
+      .input-box
+        input(
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+          maxlength="50"
+          autocomplete="current-password"
+        )
+
+      // ERROR FRONTEND
+      #errorLogin.alert.alert-danger.d-none
+
+      // BOTÓN LOGIN
+      button.login-btn(type="submit") Entrar
+
+      // BOTÓN REGRESAR (CORRECTO)
+      a.login-btn.text-center.d-block.mt-2(href="/") Inicio
+
+

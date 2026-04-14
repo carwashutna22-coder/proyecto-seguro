@@ -1,0 +1,160 @@
+include layout/header
+
+body.login-body
+
+  .overlay
+  .wave
+  .wave
+
+  .login-box
+    .logo.text-center
+      img(src="/img/logo.png", alt="Logo Autolavado")
+
+    h2 EDITAR USUARIO
+
+    if error
+      .alert.alert-danger.mb-3= error
+
+    if success
+      .alert.alert-success.mb-3= success
+
+    form(action=`/editar/${encodeURIComponent(usuario.correo)}` method="POST" id="formEditar")
+
+      //- Nombre
+      .input-box
+        input(
+          type="text"
+          name="nombre"
+          placeholder="Nombre"
+          required
+          maxlength="80"
+          value=usuario.nombre
+          pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]{2,80}"
+          title="Solo letras y espacios, mínimo 2 caracteres"
+          oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]/g, '')"
+        )
+
+      //- Correo (solo lectura, es el identificador)
+      .input-box
+        input(
+          type="email"
+          name="correo_display"
+          placeholder="Correo"
+          value=usuario.correo
+          disabled
+          style="opacity:0.6; cursor:not-allowed;"
+        )
+        small.text-muted(style="font-size:0.72rem") El correo no se puede cambiar
+
+      //- Puesto
+      .input-box
+        select(name="puesto" required)
+          option(value="" disabled) Selecciona un puesto
+          option(value="1" selected=(usuario.puesto == 1)) Lavador
+          option(value="2" selected=(usuario.puesto == 2)) Encargado
+          option(value="3" selected=(usuario.puesto == 3)) Supervisor
+          option(value="4" selected=(usuario.puesto == 4)) Administración
+
+      //- Cambio de contraseña (opcional)
+      hr(style="border-color:#ffffff55; margin: 12px 0")
+      p.text-center(style="color:#ccc; font-size:0.82rem; margin-bottom:8px")
+        | 🔒 Cambiar contraseña (opcional — dejar vacío para no cambiarla)
+
+      .input-box
+        input#passNueva(
+          type="password"
+          name="password"
+          placeholder="Nueva contraseña (mín. 6 car.)"
+          minlength="6"
+          maxlength="50"
+          autocomplete="new-password"
+          oninput="evaluarPasswordEditar()"
+        )
+        .progress.mt-1(style="height:5px")
+          #barraPassEditar.progress-bar(role="progressbar" style="width:0%" aria-valuemin="0" aria-valuemax="100")
+        small#passMsgEditar.text-muted(style="font-size:0.72rem") Mínimo 6 caracteres para cambiar
+
+      .input-box
+        input#passConfirm(
+          type="password"
+          name="password_confirm"
+          placeholder="Confirmar nueva contraseña"
+          minlength="6"
+          maxlength="50"
+          autocomplete="new-password"
+          oninput="verificarConfirm()"
+        )
+        small#confirmMsg(style="font-size:0.72rem")
+
+      #errorEditar.alert.alert-danger.d-none
+
+      button.login-btn(type="submit") Guardar cambios
+      a.btn(href="/admin" style="margin-top:8px; display:block; text-align:center") ← Regresar
+
+script.
+  function evaluarPasswordEditar() {
+    var pass = document.getElementById('passNueva').value;
+    var barra = document.getElementById('barraPassEditar');
+    var msg   = document.getElementById('passMsgEditar');
+    if (!pass) {
+      barra.style.width = '0%';
+      msg.textContent = 'Mínimo 6 caracteres para cambiar';
+      msg.className = 'text-muted';
+      return;
+    }
+    var puntos = 0;
+    if (pass.length >= 6)  puntos += 20;
+    if (pass.length >= 8)  puntos += 10;
+    if (pass.length >= 12) puntos += 10;
+    if (/[a-z]/.test(pass)) puntos += 15;
+    if (/[A-Z]/.test(pass)) puntos += 20;
+    if (/[0-9]/.test(pass)) puntos += 15;
+    if (/[^a-zA-Z0-9]/.test(pass)) puntos += 10;
+    barra.style.width = Math.min(puntos, 100) + '%';
+    var nivel, color;
+    if (puntos < 30)      { nivel = 'Muy débil'; color = 'bg-danger'; }
+    else if (puntos < 55) { nivel = 'Débil';     color = 'bg-warning'; }
+    else if (puntos < 80) { nivel = 'Aceptable'; color = 'bg-info'; }
+    else                  { nivel = 'Fuerte';    color = 'bg-success'; }
+    barra.className = 'progress-bar ' + color;
+    msg.textContent = nivel;
+    msg.className = puntos < 55 ? 'text-warning' : 'text-success';
+    verificarConfirm();
+  }
+
+  function verificarConfirm() {
+    var p1 = document.getElementById('passNueva').value;
+    var p2 = document.getElementById('passConfirm').value;
+    var msg = document.getElementById('confirmMsg');
+    if (!p2) { msg.textContent = ''; return; }
+    if (p1 === p2) {
+      msg.textContent = '✓ Coinciden';
+      msg.className = 'text-success';
+    } else {
+      msg.textContent = '✗ No coinciden';
+      msg.className = 'text-danger';
+    }
+  }
+
+  document.getElementById('formEditar').addEventListener('submit', function(e) {
+    var p1  = document.getElementById('passNueva').value;
+    var p2  = document.getElementById('passConfirm').value;
+    var err = document.getElementById('errorEditar');
+    err.classList.add('d-none');
+
+    // Si escribió algo en la nueva contraseña, validar
+    if (p1.length > 0) {
+      if (p1.length < 6) {
+        e.preventDefault();
+        err.textContent = 'La nueva contraseña debe tener al menos 6 caracteres.';
+        err.classList.remove('d-none');
+        return;
+      }
+      if (p1 !== p2) {
+        e.preventDefault();
+        err.textContent = 'Las contraseñas no coinciden.';
+        err.classList.remove('d-none');
+        return;
+      }
+    }
+  });

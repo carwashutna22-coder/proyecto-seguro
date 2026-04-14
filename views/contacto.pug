@@ -1,0 +1,247 @@
+include layout/header.pug 
+include layout/menu.pug
+
+.container.mt-5
+  h1.text-center Contáctanos
+  p.text-center.text-muted Estamos listos para atenderte ✨
+
+  .row.mt-4
+
+    // INFORMACIÓN
+    .col-md-6
+
+      h5 📞 Llámanos cuando quieras
+      p 1-800-123-4567
+      p 458 109 6668
+
+      h5 📍 Dirección
+      p Nos ubicamos cerca de la UTNA en Rincón de Romos, Aguascalientes
+
+      h5 🕒 Horario laboral
+      p Lunes a Sábado: 9:00 AM - 6:00 PM
+      p Domingo: Cerrado
+
+      h5 🌐 Redes sociales
+
+      a(href="https://facebook.com" target="_blank")
+        img(src="/img/face.png", style="width:30px; margin-right:10px;")
+
+      a(href="https://instagram.com" target="_blank")
+        img(src="/img/insta.png", style="width:30px; margin-right:10px;")
+
+      h5.mt-4 💬 WhatsApp directo
+      a.btn.btn-success(href="https://wa.me/524651546879" target="_blank") Enviar mensaje directo
+
+    // FORMULARIO
+    .col-md-6
+      h5 Envíanos un mensaje
+
+      form#formContacto
+
+        .mb-2
+          label.form-label(for="nombre") Nombre
+          input#nombre.form-control(
+            type="text"
+            placeholder="Tu nombre"
+            required
+            maxlength="80"
+            title="Solo letras y espacios, máximo 80 caracteres"
+            oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]/g, '')"
+          )
+
+        .mb-2
+          label.form-label(for="telefono") Teléfono
+          input#telefono.form-control(
+            type="tel"
+            placeholder="10 dígitos"
+            required
+            maxlength="10"
+            pattern="[0-9]{10}"
+            title="Solo 10 dígitos numéricos"
+            oninput="this.value = this.value.replace(/\\D/g, '').slice(0,10)"
+          )
+
+        .mb-2
+          label.form-label(for="correo") Correo electrónico
+          input#correo.form-control(
+            type="email"
+            placeholder="ejemplo@dominio.com"
+            required
+            maxlength="100"
+            autocomplete="email"
+            title="Solo letras, números, punto, guion y guion_bajo antes del @; dominio con letras y guion; TLD letras"
+            oninput="this.value = this.value.replace(/[^a-zA-Z0-9.@_\-]/g, '')"
+          )
+          small#correoContactoMsg.text-danger(style="font-size:0.75rem")
+
+        script.
+          document.getElementById('correo').addEventListener('input', function() {
+            var v = this.value;
+            var msg = document.getElementById('correoContactoMsg');
+            if (!v) { msg.textContent = ''; return; }
+            var partes = v.split('@');
+            if (partes.length !== 2) { msg.textContent = 'Falta @'; return; }
+            var local = partes[0], dominio = partes[1];
+            var ok = local.length >= 1 && /^[a-zA-Z0-9][a-zA-Z0-9._\-]*$/.test(local)
+              && dominio.indexOf('.') > 0;
+            msg.textContent = ok ? '' : 'Correo inválido';
+            msg.className = ok ? 'text-success' : 'text-danger';
+          });
+
+        .mb-2
+          label.form-label(for="motivo") Motivo
+          select#motivo.form-control(required)
+            option(value="") Selecciona un motivo
+            option(value="Información de servicios") Información de servicios
+            option(value="Cotización") Cotización
+            option(value="Queja o sugerencia") Queja o sugerencia
+
+        .mb-1
+          label.form-label(for="mensaje") Mensaje
+          textarea#mensaje.form-control(
+            placeholder="Escribe tu mensaje... (máximo 500 caracteres)"
+            rows="5"
+            required
+            maxlength="500"
+            oninput="document.getElementById('contadorMsg').textContent = this.value.length + '/500'"
+          )
+        small#contadorMsg.text-muted.d-block.mb-2 0/500
+
+        #errorContacto.text-danger.d-none.mb-2
+
+        button.btn.btn-success.mt-3(type="submit") Enviar por WhatsApp
+
+  .mt-5.text-center
+    h4 ¿Tienes alguna pregunta?
+    p.text-muted Estamos para brindarte el mejor servicio
+
+script.
+  document.getElementById("formContacto").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    var nombre   = document.getElementById("nombre").value.trim();
+    var telefono = document.getElementById("telefono").value.trim();
+    var correo   = document.getElementById("correo").value.trim();
+    var motivo   = document.getElementById("motivo").value;
+    var mensaje  = document.getElementById("mensaje").value.trim();
+    var errorDiv = document.getElementById("errorContacto");
+
+    function mostrarError(msg) {
+      errorDiv.textContent = msg;
+      errorDiv.classList.remove("d-none");
+    }
+    errorDiv.classList.add("d-none");
+
+    // Nombre: solo letras y espacios
+    var soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]{2,80}$/;
+    if (!soloLetras.test(nombre)) {
+      mostrarError("Nombre inválido: solo letras y espacios (mínimo 2 caracteres).");
+      return;
+    }
+
+    // Teléfono: exactamente 10 dígitos
+    if (!/^\d{10}$/.test(telefono)) {
+      mostrarError("Teléfono inválido: exactamente 10 dígitos numéricos.");
+      return;
+    }
+
+    // Correo: validación RFC estricta
+    // Parte local: a-zA-Z0-9 y punto, sin empezar/terminar con punto, sin puntos dobles
+    // Dominio: etiquetas a-zA-Z0-9 y guion (no al inicio ni al final), separadas por punto
+    // TLD: mínimo 2 chars, NO puede ser todo números
+    var errorCorreo = false;
+    var partes = correo.split("@");
+    if (partes.length !== 2) {
+      errorCorreo = true;
+    } else {
+      var local   = partes[0];
+      var dominio = partes[1];
+
+      var localValido = local.length >= 1 && local.length <= 64
+        && /^[a-zA-Z0-9]+([.][a-zA-Z0-9]+)*$/.test(local);
+
+      var etiquetas = dominio.split(".");
+      var dominioValido = etiquetas.length >= 2 && etiquetas.every(function(e) {
+        return e.length >= 1 && e.length <= 63
+          && /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(e);
+      });
+
+      var tld = etiquetas[etiquetas.length - 1];
+      var tldValido = tld.length >= 2 && /[a-zA-Z]/.test(tld);
+
+      errorCorreo = !localValido || !dominioValido || !tldValido;
+    }
+    if (errorCorreo) {
+      mostrarError("Correo inválido. Solo letras a-z/A-Z y dígitos 0-9 en la parte local; dominio con letras/dígitos y guion (no al inicio ni al final); TLD no puede ser todo números.");
+      return;
+    }
+
+    // Motivo: lista blanca
+    var motivosValidos = ["Información de servicios", "Cotización", "Queja o sugerencia"];
+    if (motivosValidos.indexOf(motivo) === -1) {
+      mostrarError("Selecciona un motivo válido.");
+      return;
+    }
+
+    // Mensaje: 1 a 500 caracteres
+    if (mensaje.length < 1 || mensaje.length > 500) {
+      mostrarError("El mensaje debe tener entre 1 y 500 caracteres.");
+      return;
+    }
+
+    // Todo OK — abrir WhatsApp
+    var numero = "524651546879";
+    var texto = "Hola, soy " + encodeURIComponent(nombre)
+      + "%0A Tel: " + encodeURIComponent(telefono)
+      + "%0A Correo: " + encodeURIComponent(correo)
+      + "%0A Motivo: " + encodeURIComponent(motivo)
+      + "%0A Mensaje: " + encodeURIComponent(mensaje);
+
+    window.open("https://wa.me/" + numero + "?text=" + texto, "_blank");
+  });
+
+footer.mt-5(style="background:#111; color:white; padding:30px;")
+  .container
+    .row
+
+      .col-md-3
+        h5 Sobre nosotros
+        p Desde su apertura en 1998, UTNACAR WASH ha brindado servicio a clientes que buscan un lavado de autos de alta calidad a un precio accesible.
+
+      .col-md-3
+        h5 Nuestros servicios
+        ul
+          li Lavado exterior exprés
+          li Limpieza interior
+          li Lavado completo
+          li Detallado exprés
+          li Encerado protector
+          li Mantenimiento preventivo
+
+      .col-md-3
+        h5 Enlaces útiles
+        ul.list-unstyled
+          li
+            a.text-white.text-decoration-none(href="/") Inicio
+          li
+            a.text-white.text-decoration-none(href="/servicios") Servicios y precios
+          li
+            a.text-white.text-decoration-none(href="/ubicacion") Ubicación
+          li
+            a.text-white.text-decoration-none(href="/contacto") Contáctanos
+
+      .col-md-3
+        h5 Información de contacto
+        p Llámanos ahora:
+        p 458 109 6668
+        p Nos ubicamos cerca de la UTNA en Rincón de Romos, Aguascalientes
+        p Lunes a Sábado: 9:00 AM - 6:00 PM
+        p Domingo: Cerrado
+
+  .text-center.mt-3
+    p ©2026 UTNACAR WASH. Todos los derechos reservados.
+    a.text-white(href="#") Mapa del sitio
+    |  | 
+    a.text-white(href="#") Términos y condiciones
+    |  | 
+    a.text-white(href="#") Política de privacidad

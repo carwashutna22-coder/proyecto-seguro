@@ -1,0 +1,33 @@
+include layout/header
+
+.container.py-5.text-center
+
+  h2.titulo-principal.mb-4 Turno de Servicio
+
+  .card.p-5.shadow-lg
+
+    h3.mb-3 Cliente
+    p #{servicio.nombreCliente}
+
+    hr
+
+    h3.mb-3 Vehículo
+    p #{servicio.marcaVehiculo} #{servicio.modeloVehiculo} - #{servicio.placasVehiculo}
+
+    hr
+
+    h3.mb-3 Servicio
+    p #{servicio.servicio}
+
+    hr
+
+    h3.mb-3 Hora de Entrada
+    p #{servicio.horaEntrada}
+
+    hr
+
+    h3.mb-3 Estado
+    p #{servicio.estadoVehiculo}
+
+    .mt-4
+      a.btn.btn-primary(href="/servicios-lista") Volver al Panel

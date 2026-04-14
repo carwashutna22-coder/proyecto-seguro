@@ -1,0 +1,106 @@
+include layout/header.pug
+include layout/menu.pug
+
+.container.mt-5
+  h1.text-center Ubicación
+  p.text-center.text-muted Encuéntranos fácilmente📍
+
+  .row.mt-4
+
+    // INFO
+    .col-md-6
+      h5 📍 Dirección
+      p Nos ubicamos cerca de la UTNA en Rincón de Romos, Aguascalientes
+
+      h5 🕒 Horario
+      ul
+        li Lunes a Sábado: 9:00 AM - 6:00 PM
+        li Domingo: Cerrado
+
+      h5 🚗 ¿Cómo llegar?
+      ul
+        li A unos minutos de la UTNA
+        li Acceso fácil desde avenida principal
+        li Zona segura y accesible
+
+      h5 💡 Recomendaciones
+      ul
+        li Llegar con tiempo en horas pico
+        li Puedes contactarnos antes de venir
+
+      h5 🧭 Referencia
+      p Estamos ubicados cerca de la Universidad Tecnológica del Norte de Aguascalientes
+
+    // MAPA
+    .col-md-6
+      iframe(
+        src="https://www.google.com/maps?q=UTNA+Rincon+de+Romos+Aguascalientes&output=embed"
+        width="100%"
+        height="350"
+        style="border:0;"
+        loading="lazy"
+      )
+
+      .mt-3.text-center
+        a.btn.btn-primary(
+          href="https://www.google.com/maps?q=UTNA+Rincon+de+Romos+Aguascalientes"
+          target="_blank"
+        ) Abrir en Google Maps
+
+  // FRASE FINAL
+  .mt-5.text-center
+    h4 ¡Te esperamos!
+    p.text-muted Visítanos y deja tu auto como nuevo
+
+
+// FOOTER
+footer.mt-5(style="background:#111; color:white; padding:30px;")
+  .container
+    .row
+
+      // SOBRE NOSOTROS
+      .col-md-3
+        h5 Sobre nosotros
+        p Desde su apertura en 1998, UTNACAR WASH ha brindado servicio a clientes que buscan un lavado de autos de alta calidad a un precio accesible.
+
+      // NUESTROS SERVICIOS
+      .col-md-3
+        h5 Nuestros servicios
+        ul
+          li Lavado exterior exprés
+          li Limpieza interior
+          li Lavado completo
+          li Detallado exprés
+          li Encerado protector
+          li Mantenimiento preventivo
+
+      // ENLACES ÚTILES ✅ (CORREGIDO)
+      .col-md-3
+        h5 Enlaces útiles
+        ul.list-unstyled
+          li
+            a.text-white.text-decoration-none(href="/") Inicio
+          li
+            a.text-white.text-decoration-none(href="/servicios") Servicios y precios
+          li
+            a.text-white.text-decoration-none(href="/ubicacion") Ubicación
+          li
+            a.text-white.text-decoration-none(href="/contacto") Contáctanos
+
+      // INFORMACIÓN DE CONTACTO
+      .col-md-3
+        h5 Información de contacto
+        p Llámanos ahora:
+        p 458 109 6668
+        p Nos ubicamos cerca de la UTNA en Rincón de Romos, Aguascalientes
+        p Lunes a Sábado: 9:00 AM - 6:00 PM
+        p Domingo: Cerrado
+
+  // PARTE INFERIOR
+  .text-center.mt-3
+    p ©2026 UTNACAR WASH. Todos los derechos reservados.
+    a.text-white(href="#") Mapa del sitio
+    |  | 
+    a.text-white(href="#") Términos y condiciones
+    |  | 
+    a.text-white(href="#") Política de privacidad

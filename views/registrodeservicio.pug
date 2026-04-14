@@ -1,0 +1,250 @@
+include layout/header
+
+.container.py-5
+  .row.justify-content-center
+    .col-lg-8.col-md-10
+
+      h2.titulo-principal.text-center.mb-2 Registro de Servicio - Auto Lavado
+      p.text-center.text-muted.mb-4 Aquí puedes registrar los servicios.
+
+      if error
+        .alert.alert-danger= error
+
+      .d-flex.justify-content-start.mb-3
+        a.btn-regresar(href="/admin") ← Regresar
+      .card-lg.p-4
+        a.btn-regresar(href="/servicios-lista") Ver servicios registrados
+      .card.shadow-lg.p-4
+
+        form.row.g-3(method="POST" action="/guardar")
+
+          //- DATOS CLIENTE
+          h5.text-info.mt-2.mb-3 Datos del Cliente
+
+          .col-md-6
+            label.form-label(for="nombreCliente") Nombre del cliente
+            input.form-control(
+              type="text"
+              id="nombreCliente"
+              name="nombreCliente"
+              required
+              maxlength="80"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]{2,80}"
+              title="Solo letras y espacios, mínimo 2 caracteres"
+              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]/g, '')"
+            )
+
+          .col-md-6
+            label.form-label(for="telefonoCliente") Teléfono (WhatsApp)
+            input.form-control(
+              type="tel"
+              id="telefonoCliente"
+              name="telefonoCliente"
+              placeholder="Ej: 4491234567"
+              required
+              maxlength="10"
+              pattern="[0-9]{10}"
+              title="Solo 10 dígitos numéricos"
+              oninput="this.value = this.value.replace(/\\D/g, '').slice(0,10)"
+            )
+
+          //- VEHICULO
+          h5.text-info.mt-4.mb-3 Datos del Vehículo
+
+          .col-md-4
+            label.form-label(for="marcaVehiculo") Marca
+            input.form-control(
+              type="text"
+              id="marcaVehiculo"
+              name="marcaVehiculo"
+              required
+              maxlength="50"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \\-]{1,50}"
+              title="Letras, números y guiones, máximo 50 caracteres"
+              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \\-]/g, '')"
+            )
+
+          .col-md-4
+            label.form-label(for="modeloVehiculo") Modelo
+            input.form-control(
+              type="text"
+              id="modeloVehiculo"
+              name="modeloVehiculo"
+              required
+              maxlength="50"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \\-]{1,50}"
+              title="Letras, números y guiones, máximo 50 caracteres"
+              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 \\-]/g, '')"
+            )
+
+          .col-md-4
+            label.form-label(for="anioVehiculo") Año
+            select.form-select(
+              id="anioVehiculo"
+              name="anioVehiculo"
+              required
+            )
+              option(value="" selected disabled) Seleccionar año...
+              - for(var y = new Date().getFullYear(); y >= 1950; y--)
+                option(value=y)= y
+
+          .col-md-4
+            label.form-label(for="colorVehiculo") Color
+            input.form-control(
+              type="text"
+              id="colorVehiculo"
+              name="colorVehiculo"
+              maxlength="30"
+              pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{0,30}"
+              title="Solo letras, máximo 30 caracteres"
+              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '')"
+            )
+
+          .col-md-4
+            label.form-label(for="placasVehiculo") Placas
+            input.form-control(
+              type="text"
+              id="placasVehiculo"
+              name="placasVehiculo"
+              required
+              minlength="7"
+              maxlength="8"
+              pattern="[a-zA-Z0-9]{7,8}"
+              title="7 u 8 caracteres alfanuméricos"
+              oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase()"
+              style="text-transform:uppercase"
+            )
+
+          .col-md-4
+            label.form-label(for="tipoVehiculo") Tipo de vehículo
+            select.form-select(
+              id="tipoVehiculo"
+              name="tipoVehiculo"
+              required
+            )
+              option(value="" selected disabled) Seleccionar...
+              option Auto
+              option Camioneta
+              option Moto
+              option Otro
+
+          //- SERVICIO
+          h5.text-info.mt-4.mb-3 Servicio solicitado
+
+          .col-md-6
+            label.form-label(for="servicio") Tipo de servicio
+            select.form-select(
+              id="servicio"
+              name="servicio"
+              required
+            )
+              option(value="" selected disabled) Seleccionar servicio...
+              option Lavado básico
+              option Lavado completo
+              option Lavado con cera
+              option Aspirado interior
+              option Lavado de motor
+              option Pulido / encerado
+
+          .col-md-6
+            label.form-label(for="precio") Precio
+            input.form-control(
+              type="text"
+              id="precio"
+              name="precio"
+              required
+              placeholder="Ej: 150.00"
+              maxlength="10"
+              pattern="\\d{1,6}(\\.\\d{1,2})?"
+              title="Solo valores numéricos positivos (máx. 6 enteros y 2 decimales)"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..{2})./g, '$1')"
+            )
+
+          //- ESTADO
+          h5.text-info.mt-4.mb-3 Estado del vehículo
+
+          .col-md-6
+            label.form-label(for="estadoVehiculo") Estado
+            select.form-select(
+              id="estadoVehiculo"
+              name="estadoVehiculo"
+              required
+            )
+              option(value="" selected disabled) Seleccionar estado...
+              option Sin daños visibles
+              option Con daños visibles
+
+          .col-md-6
+            label.form-label(for="observaciones") Observaciones
+            input.form-control(
+              type="text"
+              id="observaciones"
+              name="observaciones"
+              maxlength="200"
+              title="Solo letras, números, puntos, comas y espacios"
+              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9.,; ]/g, '')"
+            )
+
+          //- CONTROL
+          h5.text-info.mt-4.mb-3 Control del servicio
+
+          .col-md-4
+            label.form-label(for="fechaServicio") Fecha
+            input.form-control(
+              type="date"
+              id="fechaServicio"
+              name="fechaServicio"
+              required
+              min="1950-01-01"
+              title="Fecha válida"
+            )
+
+          .col-md-4
+            label.form-label(for="horaEntrada") Hora de entrada
+            input.form-control(
+              type="time"
+              id="horaEntrada"
+              name="horaEntrada"
+              required
+            )
+
+          .col-md-4
+            label.form-label(for="horaSalida") Hora de salida
+            input.form-control(
+              type="time"
+              id="horaSalida"
+              name="horaSalida"
+            )
+
+          //- WHATSAPP
+          h5.text-info.mt-4.mb-3 Notificación por WhatsApp
+
+          .col-md-6
+            .form-check.mt-2
+              input.form-check-input(
+                type="checkbox"
+                id="notificarWhatsapp"
+                name="notificarWhatsapp"
+              )
+              label.form-check-label(for="notificarWhatsapp")
+                | Confirmo la información y enviar notificación
+
+          .col-md-6
+            label.form-label(for="mensajeWhatsapp") Mensaje personalizado
+            input.form-control(
+              type="text"
+              id="mensajeWhatsapp"
+              name="mensajeWhatsapp"
+              placeholder="Ej: Su vehículo está listo"
+              maxlength="200"
+              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9.,; ]/g, '')"
+            )
+
+          //- BOTON
+          .col-12.text-center.mt-4
+            button.btn.btn-success.px-5(type="submit")
+              | Registrar servicio
+
+script.
+  // Ajustar max de fecha dinámicamente al día de hoy
+  document.getElementById('fechaServicio').max = new Date().toISOString().split('T')[0];

@@ -1,0 +1,148 @@
+include layout/header.pug
+include layout/menu.pug
+
+.container.mt-5
+
+  h1.text-center Servicio Completo
+  p.text-center.text-muted Limpieza total interior y exterior con acabado premium
+
+  // IMAGEN
+  .text-center.mt-4
+    img.img-servicio(src="/img/SC.jpg")
+
+  // DESCRIPCIÓN
+  .mt-4
+    p.text-center.mt-3
+      | Nuestro servicio completo está diseñado para quienes desean una limpieza profunda
+      | y un acabado profesional en su vehículo.
+    p.text-center.mt-3
+      | En aproximadamente 20 minutos tu automóvil recibirá atención interior y exterior,
+      | logrando un resultado impecable y duradero.
+
+  p.text-success.text-center.mt-3
+    strong ¡Servicio rápido sin necesidad de cita!
+
+  // ===== SERVICIOS =====
+
+  // EXTERIOR
+  .card.card-servicio.mt-5
+    .badge-popular Más solicitado
+
+    h2.titulo-servicio.text-center Detalle Exterior
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Lavado completo del vehículo
+        li Eliminación de suciedad profunda
+        li Pulido ligero
+        li Aplicación de cera protectora
+        li Limpieza de rines y llantas
+
+      .precio-box
+        span.precio $150
+
+  // INTERIOR
+  .card.card-servicio.mt-4
+    h2.titulo-servicio.text-center Detalle Interior
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Aspirado profundo
+        li Limpieza de tablero y consola
+        li Limpieza de asientos
+        li Limpieza de puertas
+        li Aromatizante
+
+      .precio-box
+        span.precio $130
+
+  // COMPLETO (DESTACADO)
+  .card.card-servicio.destacado.mt-4
+    .badge-vip PREMIUM
+
+    h2.titulo-servicio.text-center Servicio Completo 5 Estrellas
+
+    .contenido-servicio
+      ul.lista-servicio
+        li Lavado exterior + interior
+        li Pulido y encerado
+        li Limpieza profunda
+        li Protección UV
+        li Acabado premium
+
+      .precio-box
+        span.precio $220
+
+  // ===== SERVICIOS EXTRA =====
+  .mt-5
+    h3.text-center Servicios adicionales
+
+    .row
+      .col-md-6
+        ul
+          li Ambientador - $20
+          li Brillo de llantas - $30
+          li Cera extra - $50
+
+      .col-md-6
+        ul
+          li Aspirado extra - $40
+          li Limpieza de motor - $120
+          li Pulido especial - $150
+
+  // NOTA
+  p.text-muted.mt-3
+    | *El tiempo puede variar dependiendo del estado del vehículo.*
+
+  // BOTÓN
+  .text-center.mt-5
+    a.btn.btn-primary(href="/servicios") Volver a servicios
+
+
+// ===== FOOTER =====
+footer.mt-5(style="background:#111; color:white; padding:30px;")
+  .container
+    .row
+
+      .col-md-3
+        h5 Sobre nosotros
+        p Desde su apertura en 1998, UTNACAR WASH ha brindado servicio a clientes que buscan un lavado de autos de alta calidad a un precio accesible, con atención profesional y resultados confiables.
+
+      .col-md-3
+        h5 Nuestros servicios
+        ul
+          li Lavado exterior exprés
+          li Limpieza interior
+          li Lavado completo
+          li Detallado exprés
+          li Encerado protector
+          li Mantenimiento preventivo
+
+        // ENLACES ÚTILES ✅ (CORREGIDO)
+      .col-md-3
+        h5 Enlaces útiles
+        ul.list-unstyled
+          li
+            a.text-white.text-decoration-none(href="/") Inicio
+          li
+            a.text-white.text-decoration-none(href="/servicios") Servicios y precios
+          li
+            a.text-white.text-decoration-none(href="/ubicacion") Ubicación
+          li
+            a.text-white.text-decoration-none(href="/contacto") Contáctanos
+
+      .col-md-3
+        h5 Información de contacto
+        p Llámanos ahora:
+        p 458 109 6668
+        p Guadalupe, Zacatecas
+        p Lunes a sábado: 8:00 a.m. – 6:00 p.m.
+        p Domingo: 9:00 a.m. – 3:00 p.m.
+
+  .text-center.mt-3
+    p ©2026 UTNACAR WASH. Todos los derechos reservados.
+    a(href="#") Mapa del sitio
+    |  | 
+    a(href="#") Términos y condiciones
+    |  | 
+    a(href="#") Política de privacidad
