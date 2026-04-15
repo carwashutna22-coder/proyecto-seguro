@@ -36,7 +36,7 @@ app.use(session({
 }));
 
 // ── Rutas
-app.use('/', require('./routes/router'));
+//app.use('/', require('./routes/router'));
 
 // ── Manejo de errores 404
 app.use((req, res) => {
