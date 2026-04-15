@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
-const { securityHeaders } = require('./middleware/security');
+//const { securityHeaders } = require('./middleware/security');
 
 const app  = express();
 const port = process.env.PORT || 5000;
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(express.json({ limit: '10kb' }));
 
 // ── Headers de seguridad HTTP (XSS, Clickjacking, MIME sniffing, CSP)
-app.use(securityHeaders);
+//app.use(securityHeaders);
 
 // ── Sesión segura
 app.use(session({
