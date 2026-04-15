@@ -32,7 +32,7 @@ DB_PASSWORD=tu_password
 DB_NAME=carwash  
 
 ## 👨‍💻 Autor
-- Romi
+- Roni
 - Francis
 - Nahum
 - Esme

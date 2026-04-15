@@ -38,9 +38,9 @@ app.use(session({
 }));
 
 // ── Rutas
-//app.use('/', require('./routes/router'));
+app.use('/', require('./routes/router'));
 
-// ── Manejo de errores 404
+// 404
 app.use((req, res) => {
   res.status(404).render('error', { mensaje: 'Página no encontrada.' });
 });
