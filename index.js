@@ -1,3 +1,5 @@
+console.log("🚀 INICIO APP");
+
 'use strict';
 
 require('dotenv').config();
@@ -48,6 +50,8 @@ app.use((err, req, res, next) => {
   console.error('Error no controlado:', err.message);
   res.status(500).render('error', { mensaje: 'Error interno del servidor.' });
 });
+
+console.log("👉 Antes de listen");
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Servidor corriendo en puerto ${port}`);
