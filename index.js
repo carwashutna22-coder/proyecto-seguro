@@ -49,6 +49,6 @@ app.use((err, req, res, next) => {
   res.status(500).render('error', { mensaje: 'Error interno del servidor.' });
 });
 
-app.listen(port, () => {
-  console.log(`✅ Servidor corriendo en http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Servidor corriendo en puerto ${port}`);
 });
