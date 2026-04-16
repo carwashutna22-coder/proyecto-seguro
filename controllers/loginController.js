@@ -14,21 +14,27 @@ exports.login = async (req, res) => {
       .single();
 
     if (error || !usuario) {
-      return res.render('login', { error: 'Credenciales incorrectas' });
-    }
+  return res.render('login', { error: 'Credenciales incorrectas' });
+}
+
+// 🔍 DEBUG (AQUÍ VA)
+console.log("INPUT:", password);
+console.log("BD:", usuario.password);
 
     // 🔐 COMPARAR PASSWORD
-   let match = false;
+let match = false;
 
+// 🔐 Validar que exista password
+if (!usuario.password) {
+  return res.render('login', { error: 'Usuario corrupto (sin contraseña)' });
+}
+
+// 🔐 Comparación segura
 if (usuario.password.startsWith('$2b$')) {
   match = await bcrypt.compare(password, usuario.password);
 } else {
-  match = password === usuario.password;
+  match = password.trim() === usuario.password.trim();
 }
-
-    if (!match) {
-      return res.render('login', { error: 'Credenciales incorrectas' });
-    }
 
     // ✅ CREAR SESIÓN
     req.session.usuario = {

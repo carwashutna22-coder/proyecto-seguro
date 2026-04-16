@@ -43,8 +43,9 @@ router.get('/login',  (req, res) => res.render('login'));
 router.post('/login', sanitizeBody, validateLogin, login);
 router.get('/logout', logout);
 
-router.get('/registro',  protegerAdmin, (req, res) => res.render('registro'));
-router.post('/registro', protegerAdmin, sanitizeBody, validateRegistro, registrar);
+// ✅ TEMPORAL (sin protección)
+router.get('/registro', (req, res) => res.render('registro'));
+router.post('/registro', sanitizeBody, validateRegistro, registrar);
 
 // ══════════════════════════════════════════════
 // ADMIN

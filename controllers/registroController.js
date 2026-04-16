@@ -15,22 +15,14 @@ exports.registrar = async (req, res) => {
     return res.render('registro', { error: 'Nombre inválido' });
   }
 
-  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(nombre)) {
-    return res.render('registro', { error: 'Nombre solo letras' });
-  }
-
   // 🔐 VALIDAR CORREO
   const emailValido = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  if (!correo || !emailValido.test(correo) || correo.length > 100) {
+  if (!emailValido.test(correo) || correo.length > 100) {
     return res.render('registro', { error: 'Correo inválido' });
   }
 
   // 🔐 VALIDAR PASSWORD
-  if (!password) {
-    return res.render('registro', { error: 'Contraseña requerida' });
-  }
-
   const passwordValido = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
   if (!passwordValido.test(password)) {
@@ -43,7 +35,7 @@ exports.registrar = async (req, res) => {
   }
 
   try {
-    // 🔍 VERIFICAR SI YA EXISTE
+    // 🔍 Verificar si existe
     const { data: existe } = await supabase
       .from('usuarios')
       .select('correo')
@@ -55,14 +47,15 @@ exports.registrar = async (req, res) => {
     }
 
     // 🔐 HASH PASSWORD
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password, 10);
 
-    // 💾 INSERTAR
+    // 💾 Guardar
     const { error } = await supabase
       .from('usuarios')
-      .insert([{ nombre, correo, password: hashedPassword, puesto }]);
+      .insert([{ nombre, correo, password: hash, puesto }]);
 
     if (error) {
+      console.error(error.message);
       return res.render('registro', { error: 'Error al registrar.' });
     }
 
