@@ -14,29 +14,36 @@ exports.login = async (req, res) => {
       .single();
 
     if (error || !usuario) {
-  return res.render('login', { error: 'Credenciales incorrectas' });
-}
+      return res.render('login', { error: 'Credenciales incorrectas' });
+    }
 
-// 🔍 DEBUG (AQUÍ VA)
-console.log("INPUT:", password);
-console.log("BD:", usuario.password);
+    console.log("INPUT:", password);
+    console.log("BD:", usuario.password);
 
-    // 🔐 COMPARAR PASSWORD
-let match = false;
+    let match = false;
 
-// 🔐 Validar que exista password
-if (!usuario.password) {
-  return res.render('login', { error: 'Usuario corrupto (sin contraseña)' });
-}
+    if (!usuario.password) {
+      return res.render('login', { error: 'Usuario sin contraseña' });
+    }
 
-// 🔐 Comparación segura
-if (usuario.password.startsWith('$2b$')) {
-  match = await bcrypt.compare(password, usuario.password);
-} else {
-  match = password.trim() === usuario.password.trim();
-}
+    const passDB = usuario.password.toString().trim();
+    const passInput = password.toString().trim();
 
-    // ✅ CREAR SESIÓN
+    // 🔥 Primero comparar texto plano
+    if (passInput === passDB) {
+      match = true;
+    }
+    // 🔐 Luego bcrypt
+    else if (passDB.startsWith('$2b$')) {
+      match = await bcrypt.compare(passInput, passDB);
+    }
+
+    // ❗ ESTA LÍNEA ES LA CLAVE
+    if (!match) {
+      return res.render('login', { error: 'Credenciales incorrectas' });
+    }
+
+    // ✅ CREAR SESIÓN SOLO SI ES CORRECTO
     req.session.usuario = {
       correo: usuario.correo,
       nombre: usuario.nombre,
