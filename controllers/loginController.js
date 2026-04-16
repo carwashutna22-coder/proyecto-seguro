@@ -18,7 +18,13 @@ exports.login = async (req, res) => {
     }
 
     // 🔐 COMPARAR PASSWORD
-    const match = await bcrypt.compare(password, usuario.password);
+   let match = false;
+
+if (usuario.password.startsWith('$2b$')) {
+  match = await bcrypt.compare(password, usuario.password);
+} else {
+  match = password === usuario.password;
+}
 
     if (!match) {
       return res.render('login', { error: 'Credenciales incorrectas' });
