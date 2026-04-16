@@ -115,17 +115,6 @@ exports.guardarServicio = async (req, res) => {
     if (estadoError) throw estadoError;
 
     // 7. Guardar notificación WhatsApp (solo si está marcado)
-    if (notificarWhatsapp) {
-      const msgDefault = `Su vehículo ${marcaS} ${modeloS} está siendo atendido.`;
-      const { error: whatsappError } = await supabase
-        .from('WHATSAPP')
-        .insert([{
-          notificarWhatsapp: 'si',
-          ensajeWhatsapp: mensajeS || msgDefault
-        }]);
-      if (whatsappError) throw whatsappError;
-    }
-
     res.redirect('/admin');
 
   } catch (err) {
