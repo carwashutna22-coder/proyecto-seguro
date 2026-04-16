@@ -11,21 +11,29 @@ exports.registrar = async (req, res) => {
 
   // 🔐 VALIDAR NOMBRE
   if (!nombre || nombre.length < 2 || nombre.length > 80) {
-    return res.render('registro', { error: 'Nombre inválido' });
+    return res.render('registro', { error: 'Nombre inválido (2-80 caracteres)' });
+  }
+
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(nombre)) {
+    return res.render('registro', { error: 'Nombre solo puede contener letras' });
   }
 
   // 🔐 VALIDAR CORREO
   const emailValido = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  if (!emailValido.test(correo) || correo.length > 100) {
+  if (!correo || !emailValido.test(correo) || correo.length > 100) {
     return res.render('registro', { error: 'Correo inválido' });
   }
 
-  // 🔐 VALIDAR PASSWORD (nivel pro)
+  // 🔐 VALIDAR PASSWORD
+  if (!password) {
+    return res.render('registro', { error: 'Contraseña requerida' });
+  }
+
   const passwordValido = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
   if (!passwordValido.test(password)) {
-    return res.render('registro', { error: 'Contraseña insegura' });
+    return res.render('registro', { error: 'Contraseña insegura (mínimo 8 caracteres, mayúscula, número y símbolo)' });
   }
 
   // 🔐 VALIDAR PUESTO
@@ -34,7 +42,7 @@ exports.registrar = async (req, res) => {
   }
 
   try {
-    // 🔍 Verificar si ya existe
+    // 🔍 VERIFICAR SI YA EXISTE
     const { data: existe } = await supabase
       .from('usuarios')
       .select('correo')
@@ -45,7 +53,7 @@ exports.registrar = async (req, res) => {
       return res.render('registro', { error: 'El correo ya está registrado.' });
     }
 
-    // 💾 Insertar usuario
+    // 💾 INSERTAR USUARIO
     const { error } = await supabase
       .from('usuarios')
       .insert([{ nombre, correo, password, puesto }]);
@@ -55,6 +63,7 @@ exports.registrar = async (req, res) => {
       return res.render('registro', { error: 'Error al registrar. Intenta de nuevo.' });
     }
 
+    // ✅ REDIRECT LOGIN
     res.redirect('/login');
 
   } catch (err) {
