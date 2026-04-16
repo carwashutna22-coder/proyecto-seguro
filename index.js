@@ -25,15 +25,17 @@ app.use(express.json({ limit: '10kb' }));
 //app.use(securityHeaders);
 
 // ── Sesión segura
+app.set('trust proxy', 1); // 🔥 IMPORTANTE EN RENDER
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'cambiar_este_secreto_en_produccion_2026',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    httpOnly: true,          // Impide acceso JS a la cookie
-    secure: process.env.NODE_ENV === 'production',           // Cambiar a true en producción con HTTPS
-    sameSite: 'strict',      // Protección CSRF básica
-    maxAge: 1000 * 60 * 60 * 4  // 4 horas
+    httpOnly: true,
+    secure: true,        // 🔥 Render usa HTTPS
+    sameSite: 'none',    // 🔥 CLAVE: permite envío de cookie
+    maxAge: 1000 * 60 * 60 * 4
   }
 }));
 
