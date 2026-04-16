@@ -115,8 +115,7 @@ exports.guardarServicio = async (req, res) => {
     if (estadoError) throw estadoError;
 
     // 7. Guardar notificación WhatsApp (solo si está marcado)
-    res.redirect('/admin');
-
+    
   } catch (err) {
     console.error('Error al guardar servicio:', err.message);
     res.render('error', { mensaje: 'Error al registrar el servicio. Intenta de nuevo.' });
