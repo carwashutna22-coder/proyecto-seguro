@@ -38,7 +38,7 @@ body.login-body
           required
           maxlength="100"
           autocomplete="email"
-          oninput="validarCorreoReg()"
+          oninput="this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g, ''); validarCorreoReg()"
         )
         small#correoRegMsg.text-danger(style="font-size:0.75rem")
 
