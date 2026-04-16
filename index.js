@@ -31,7 +31,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,          // Impide acceso JS a la cookie
-    secure: false,           // Cambiar a true en producción con HTTPS
+    secure: process.env.NODE_ENV === 'production',           // Cambiar a true en producción con HTTPS
     sameSite: 'strict',      // Protección CSRF básica
     maxAge: 1000 * 60 * 60 * 4  // 4 horas
   }

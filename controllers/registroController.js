@@ -2,6 +2,7 @@
 
 const supabase = require('../src/lib/supabase');
 const { sanitizeText } = require('../middleware/security');
+const bcrypt = require('bcrypt');
 
 exports.registrar = async (req, res) => {
   const nombre   = sanitizeText(req.body.nombre || '');
@@ -11,11 +12,11 @@ exports.registrar = async (req, res) => {
 
   // 🔐 VALIDAR NOMBRE
   if (!nombre || nombre.length < 2 || nombre.length > 80) {
-    return res.render('registro', { error: 'Nombre inválido (2-80 caracteres)' });
+    return res.render('registro', { error: 'Nombre inválido' });
   }
 
   if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(nombre)) {
-    return res.render('registro', { error: 'Nombre solo puede contener letras' });
+    return res.render('registro', { error: 'Nombre solo letras' });
   }
 
   // 🔐 VALIDAR CORREO
@@ -33,7 +34,7 @@ exports.registrar = async (req, res) => {
   const passwordValido = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
   if (!passwordValido.test(password)) {
-    return res.render('registro', { error: 'Contraseña insegura (mínimo 8 caracteres, mayúscula, número y símbolo)' });
+    return res.render('registro', { error: 'Contraseña insegura' });
   }
 
   // 🔐 VALIDAR PUESTO
@@ -53,21 +54,22 @@ exports.registrar = async (req, res) => {
       return res.render('registro', { error: 'El correo ya está registrado.' });
     }
 
-    // 💾 INSERTAR USUARIO
+    // 🔐 HASH PASSWORD
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 💾 INSERTAR
     const { error } = await supabase
       .from('usuarios')
-      .insert([{ nombre, correo, password, puesto }]);
+      .insert([{ nombre, correo, password: hashedPassword, puesto }]);
 
     if (error) {
-      console.error('Error al registrar:', error.message);
-      return res.render('registro', { error: 'Error al registrar. Intenta de nuevo.' });
+      return res.render('registro', { error: 'Error al registrar.' });
     }
 
-    // ✅ REDIRECT LOGIN
     res.redirect('/login');
 
   } catch (err) {
-    console.error('Error en registro:', err.message);
-    res.render('registro', { error: 'Error interno. Intenta de nuevo.' });
+    console.error(err.message);
+    res.render('registro', { error: 'Error interno.' });
   }
 };

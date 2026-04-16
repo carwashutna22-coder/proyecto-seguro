@@ -1,26 +1,42 @@
 'use strict';
 
 const supabase = require('../src/lib/supabase');
+const bcrypt = require('bcrypt');
 
 exports.login = async (req, res) => {
   const { correo, password } = req.body;
 
-  const { data, error } = await supabase
-    .from('usuarios')
-    .select(`
-      *,
-      puestos ( nombre_puesto )
-    `)
-    .eq('correo', correo)
-    .eq('password', password)
-    .single();
+  try {
+    const { data: usuario, error } = await supabase
+      .from('usuarios')
+      .select('*')
+      .eq('correo', correo)
+      .single();
 
-  if (error || !data) {
-    return res.render('login', { error: 'Usuario o contraseña incorrectos.' });
+    if (error || !usuario) {
+      return res.render('login', { error: 'Credenciales incorrectas' });
+    }
+
+    // 🔐 COMPARAR PASSWORD
+    const match = await bcrypt.compare(password, usuario.password);
+
+    if (!match) {
+      return res.render('login', { error: 'Credenciales incorrectas' });
+    }
+
+    // ✅ CREAR SESIÓN
+    req.session.usuario = {
+      correo: usuario.correo,
+      nombre: usuario.nombre,
+      puesto: usuario.puesto
+    };
+
+    res.redirect('/admin');
+
+  } catch (err) {
+    console.error(err.message);
+    res.render('login', { error: 'Error interno' });
   }
-
-  req.session.usuario = data;
-  res.redirect('/admin');
 };
 
 exports.logout = (req, res) => {
