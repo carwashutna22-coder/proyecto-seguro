@@ -9,15 +9,23 @@ exports.registrar = async (req, res) => {
   const password = req.body.password;
   const puesto   = parseInt(req.body.puesto, 10);
 
-  // 🔐 VALIDAR CORREO
-  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailValido.test(correo)) {
-    return res.status(400).render('registro', { error: 'Correo inválido.' });
+  // 🔐 VALIDAR NOMBRE
+  if (!nombre || nombre.length < 2 || nombre.length > 80) {
+    return res.render('registro', { error: 'Nombre inválido' });
   }
 
-  // 🔐 VALIDAR PASSWORD (extra nivel pro)
-  if (!password || password.length < 8) {
-    return res.status(400).render('registro', { error: 'La contraseña debe tener mínimo 8 caracteres.' });
+  // 🔐 VALIDAR CORREO
+  const emailValido = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  if (!emailValido.test(correo) || correo.length > 100) {
+    return res.render('registro', { error: 'Correo inválido' });
+  }
+
+  // 🔐 VALIDAR PASSWORD (nivel pro)
+  const passwordValido = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  if (!passwordValido.test(password)) {
+    return res.render('registro', { error: 'Contraseña insegura' });
   }
 
   // 🔐 VALIDAR PUESTO
