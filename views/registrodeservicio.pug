@@ -216,30 +216,6 @@ include layout/header
               name="horaSalida"
             )
 
-          //- WHATSAPP
-          h5.text-info.mt-4.mb-3 Notificación por WhatsApp
-
-          .col-md-6
-            .form-check.mt-2
-              input.form-check-input(
-                type="checkbox"
-                id="notificarWhatsapp"
-                name="notificarWhatsapp"
-              )
-              label.form-check-label(for="notificarWhatsapp")
-                | Confirmo la información y enviar notificación
-
-          .col-md-6
-            label.form-label(for="mensajeWhatsapp") Mensaje personalizado
-            input.form-control(
-              type="text"
-              id="mensajeWhatsapp"
-              name="mensajeWhatsapp"
-              placeholder="Ej: Su vehículo está listo"
-              maxlength="200"
-              oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9.,; ]/g, '')"
-            )
-
           //- BOTON
           .col-12.text-center.mt-4
             button.btn.btn-success.px-5(type="submit")
